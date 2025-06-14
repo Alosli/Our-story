@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', function () {
         6: "❤️ أنتي حقي وانا حقك ❤️"
     };
 
+    const chapterSounds = {
+        1: new Audio('sounds/ch1.ogg'),
+        2: new Audio('sounds/ch2.ogg'),
+        3: new Audio('sounds/ch3.ogg'),
+        4: new Audio('sounds/ch4.ogg'),
+        5: new Audio('sounds/ch5.ogg'),
+        6: new Audio('sounds/ch6.ogg'),
+    };
+
     const loader = document.querySelector('.loader');
 
     window.addEventListener('load', function () {
@@ -60,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const transition = document.createElement('div');
         transition.className = 'page-transition';
 
-        // Sparkle container
         const sparkleContainer = document.createElement('div');
         sparkleContainer.className = 'sparkle-container';
         transition.appendChild(sparkleContainer);
@@ -74,23 +82,26 @@ document.addEventListener('DOMContentLoaded', function () {
             sparkleContainer.appendChild(sparkle);
         }
 
-        // Animated message
         const transitionMessage = document.createElement('div');
         transitionMessage.className = 'transition-message magic';
-        const messageText = chapterMessages[chapterNum] || 'Loading next chapter...';
+        const messageText = chapterMessages[chapterNum] || '...';
 
-        const span = document.createElement('span');
-        span.className = 'fade-in-block';
-        span.textContent = messageText;
-        transitionMessage.appendChild(span);
-
+        const animatedText = createArabicTextNode(messageText, 0, false);
+        transitionMessage.appendChild(animatedText);
         transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
 
-        // Optional sound effect
-        const heartbeat = new Audio('sounds/heartbeat.mp3');
-        heartbeat.volume = 0.5;
-        heartbeat.play();
+        // Stop any other audio
+        Object.values(chapterSounds).forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        const sound = chapterSounds[chapterNum];
+        if (sound) {
+            sound.volume = 0.5;
+            sound.play();
+        }
 
         setTimeout(function () {
             transition.classList.add('active');
@@ -123,10 +134,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     selectedChapter.classList.add('active');
                     transition.classList.add('exit');
 
+                    if (sound) {
+                        sound.pause();
+                        sound.currentTime = 0;
+                    }
+
                     setTimeout(function () {
                         document.body.removeChild(transition);
                     }, 1000);
-                }, 2500); // Show message longer
+                }, 2500);
             }, 2000);
         }, 50);
     }
@@ -151,11 +167,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const transitionMessage = document.createElement('div');
         transitionMessage.className = 'transition-message magic';
         const messageText = "مفاجأة صغيرة لكِ 🎁❤️";
-        const span = document.createElement('span');
-        span.className = 'fade-in-block';
-        span.textContent = messageText;
-        transitionMessage.appendChild(span);
-
+        const animatedText = createArabicTextNode(messageText, 0, false);
+        transitionMessage.appendChild(animatedText);
         transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
 
@@ -184,12 +197,39 @@ document.addEventListener('DOMContentLoaded', function () {
                     birthdayPage.classList.add('active');
                     transition.classList.add('exit');
 
+                    chime.pause();
+                    chime.currentTime = 0;
+
                     setTimeout(function () {
                         document.body.removeChild(transition);
                     }, 1000);
                 }, 2500);
             }, 2000);
         }, 50);
+    }
+
+    function createArabicTextNode(text, delay = 0, animateWords = false) {
+        const container = document.createElement('span');
+        container.className = 'arabic-transition';
+
+        if (animateWords) {
+            const words = text.split(' ');
+            words.forEach((word, index) => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                span.className = 'fade-in-word';
+                span.style.animationDelay = `${delay + index * 0.3}s`;
+                container.appendChild(span);
+            });
+        } else {
+            const span = document.createElement('span');
+            span.textContent = text;
+            span.className = 'fade-in-block';
+            span.style.animationDelay = `${delay}s`;
+            container.appendChild(span);
+        }
+
+        return container;
     }
 
     function updateBackground(chapterNum) {
