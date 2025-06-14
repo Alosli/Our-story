@@ -60,48 +60,39 @@ document.addEventListener('DOMContentLoaded', function () {
         const transition = document.createElement('div');
         transition.className = 'page-transition';
 
-        // Sparkle container
+        // Heart sparkle container
         const sparkleContainer = document.createElement('div');
         sparkleContainer.className = 'sparkle-container';
         transition.appendChild(sparkleContainer);
 
         for (let i = 0; i < 25; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = `${Math.random() * 100}%`;
-            sparkle.style.top = `${Math.random() * 100}%`;
-            sparkle.style.animationDelay = `${Math.random() * 2}s`;
-            sparkleContainer.appendChild(sparkle);
+            const heart = document.createElement('div');
+            heart.className = 'sparkle-heart';
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+            heart.style.animationDelay = `${Math.random() * 2}s`;
+            sparkleContainer.appendChild(heart);
         }
 
-        // Animated message
         const transitionMessage = document.createElement('div');
-        transitionMessage.className = 'transition-message magic';
-        const messageText = chapterMessages[chapterNum] || 'Loading next chapter...';
-
-        [...messageText].forEach((char, index) => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.style.animationDelay = `${index * 0.05}s`;
-            transitionMessage.appendChild(span);
-        });
-
+        transitionMessage.className = 'transition-message magic fade-in';
+        transitionMessage.textContent = chapterMessages[chapterNum] || 'Loading next chapter...';
         transition.appendChild(transitionMessage);
+
         document.body.appendChild(transition);
 
-        // Optional sound effect
-        const chime = new Audio('sounds/chime.mp3');
-        chime.volume = 0.5;
-        chime.play();
+        // Heartbeat audio
+        const heartbeat = new Audio('sounds/heartbeat.mp3');
+        heartbeat.volume = 0.5;
+        heartbeat.play();
 
-        setTimeout(function () {
+        setTimeout(() => {
             transition.classList.add('active');
 
-            setTimeout(function () {
-                const chapters = document.querySelectorAll('.chapter-container');
-                chapters.forEach(chapter => {
-                    chapter.style.display = 'none';
-                    chapter.classList.remove('active');
+            setTimeout(() => {
+                document.querySelectorAll('.chapter-container').forEach(c => {
+                    c.style.display = 'none';
+                    c.classList.remove('active');
                 });
 
                 chapterBtns.forEach(btn => {
@@ -114,21 +105,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 const selectedChapter = document.getElementById(`chapter${chapterNum}`);
                 selectedChapter.style.display = 'block';
 
-                const birthdayPage = document.getElementById('birthdayPage');
-                birthdayPage.style.display = 'none';
+                document.getElementById('birthdayPage').style.display = 'none';
 
                 currentChapter = chapterNum;
                 updateBackground(chapterNum);
                 window.scrollTo(0, 0);
 
-                setTimeout(function () {
+                setTimeout(() => {
                     selectedChapter.classList.add('active');
                     transition.classList.add('exit');
+                    heartbeat.pause();
 
-                    setTimeout(function () {
+                    setTimeout(() => {
                         document.body.removeChild(transition);
                     }, 1000);
-                }, 2500); // Show message longer
+                }, 2500);
             }, 2000);
         }, 50);
     }
@@ -142,53 +133,46 @@ document.addEventListener('DOMContentLoaded', function () {
         transition.appendChild(sparkleContainer);
 
         for (let i = 0; i < 25; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.style.left = `${Math.random() * 100}%`;
-            sparkle.style.top = `${Math.random() * 100}%`;
-            sparkle.style.animationDelay = `${Math.random() * 2}s`;
-            sparkleContainer.appendChild(sparkle);
+            const heart = document.createElement('div');
+            heart.className = 'sparkle-heart';
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = `${Math.random() * 100}%`;
+            heart.style.animationDelay = `${Math.random() * 2}s`;
+            sparkleContainer.appendChild(heart);
         }
 
         const transitionMessage = document.createElement('div');
-        transitionMessage.className = 'transition-message magic';
-        const messageText = "مفاجأة صغيرة لكِ 🎁❤️";
-        [...messageText].forEach((char, index) => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.style.animationDelay = `${index * 0.05}s`;
-            transitionMessage.appendChild(span);
-        });
-
+        transitionMessage.className = 'transition-message magic fade-in';
+        transitionMessage.textContent = "مفاجأة صغيرة لكِ 🎁❤️";
         transition.appendChild(transitionMessage);
+
         document.body.appendChild(transition);
 
-        const chime = new Audio('sounds/chime.mp3');
-        chime.volume = 0.5;
-        chime.play();
+        const heartbeat = new Audio('sounds/heartbeat.mp3');
+        heartbeat.volume = 0.5;
+        heartbeat.play();
 
-        setTimeout(function () {
+        setTimeout(() => {
             transition.classList.add('active');
 
-            setTimeout(function () {
-                const chapters = document.querySelectorAll('.chapter-container');
-                chapters.forEach(chapter => {
-                    chapter.style.display = 'none';
-                    chapter.classList.remove('active');
+            setTimeout(() => {
+                document.querySelectorAll('.chapter-container').forEach(c => {
+                    c.style.display = 'none';
+                    c.classList.remove('active');
                 });
 
                 const birthdayPage = document.getElementById('birthdayPage');
                 birthdayPage.style.display = 'block';
-
                 document.querySelector('.bg-image').style.filter = 'brightness(0.6) blur(5px)';
                 createHeartShower();
                 window.scrollTo(0, 0);
 
-                setTimeout(function () {
+                setTimeout(() => {
                     birthdayPage.classList.add('active');
                     transition.classList.add('exit');
+                    heartbeat.pause();
 
-                    setTimeout(function () {
+                    setTimeout(() => {
                         document.body.removeChild(transition);
                     }, 1000);
                 }, 2500);
