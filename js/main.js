@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let isArabic = true;
 
     const chapterMessages = {
-        1: "Where it all began...",
-        2: "The spark that lit our hearts 🔥",
-        3: "Our first real moment together",
-        4: "Through ups and downs — still one soul",
-        5: "Even from afar, love only grew",
-        6: "The chapter before forever ❤️"
+        1: "❤️ أحــــــــــــــبك ❤️",
+        2: "❤️ أعشقـــــــــــــــــك ❤️",
+        3: "❤️ أمــــــــــــــــــــوت فيكي",
+        4: "❤️ أهـــــــــــــــواكي ❤️",
+        5: "❤️ مَتـــــــــــــــــيم فيكي ❤️",
+        6: "❤️ أنتي حقي وانا حقك ❤️"
     };
 
     const loader = document.querySelector('.loader');
