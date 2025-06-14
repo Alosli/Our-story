@@ -79,20 +79,18 @@ document.addEventListener('DOMContentLoaded', function () {
         transitionMessage.className = 'transition-message magic';
         const messageText = chapterMessages[chapterNum] || 'Loading next chapter...';
 
-        [...messageText].forEach((char, index) => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.style.animationDelay = `${index * 0.05}s`;
-            transitionMessage.appendChild(span);
-        });
+        const span = document.createElement('span');
+        span.className = 'fade-in-block';
+        span.textContent = messageText;
+        transitionMessage.appendChild(span);
 
         transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
 
         // Optional sound effect
-        const chime = new Audio('sounds/chime.mp3');
-        chime.volume = 0.5;
-        chime.play();
+        const heartbeat = new Audio('sounds/heartbeat.mp3');
+        heartbeat.volume = 0.5;
+        heartbeat.play();
 
         setTimeout(function () {
             transition.classList.add('active');
@@ -153,12 +151,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const transitionMessage = document.createElement('div');
         transitionMessage.className = 'transition-message magic';
         const messageText = "مفاجأة صغيرة لكِ 🎁❤️";
-        [...messageText].forEach((char, index) => {
-            const span = document.createElement('span');
-            span.textContent = char;
-            span.style.animationDelay = `${index * 0.05}s`;
-            transitionMessage.appendChild(span);
-        });
+        const span = document.createElement('span');
+        span.className = 'fade-in-block';
+        span.textContent = messageText;
+        transitionMessage.appendChild(span);
 
         transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
