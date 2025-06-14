@@ -214,21 +214,28 @@ document.addEventListener('DOMContentLoaded', function () {
         setInterval(() => createHeart(heartsContainer), 3000);
     }
 
-    function createHeart(container) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.bottom = '-20px';
-        const size = Math.random() * 15 + 10;
-        heart.style.width = `${size}px`;
-        heart.style.height = `${size}px`;
-        heart.style.opacity = Math.random() * 0.5 + 0.5;
-        const hue = Math.random() * 20 - 10;
-        heart.style.backgroundColor = `hsl(0, 100%, ${60 + hue}%)`;
-        const duration = Math.random() * 10 + 10;
-        heart.style.animation = `floatUp ${duration}s ease-in infinite`;
-        container.appendChild(heart);
-        setTimeout(() => container.removeChild(heart), duration * 1000);
+   function createHeart(container) {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+
+    sparkle.style.left = `${Math.random() * 100}%`;
+    sparkle.style.bottom = '-20px';
+
+    const size = Math.random() * 15 + 10;
+    sparkle.style.width = `${size}px`;
+    sparkle.style.height = `${size}px`;
+
+    sparkle.style.opacity = Math.random() * 0.5 + 0.5;
+    const hue = Math.random() * 20 - 10;
+    sparkle.style.backgroundColor = `hsl(0, 100%, ${60 + hue}%)`;
+
+    const duration = Math.random() * 10 + 10;
+    sparkle.style.animation = `floatUp ${duration}s ease-in infinite`;
+
+    container.appendChild(sparkle);
+
+    setTimeout(() => container.removeChild(sparkle), duration * 1000);
+
     }
 
     function createHeartShower() {
