@@ -1,51 +1,50 @@
 // Main JavaScript for Love Story Website
 
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize variables
+document.addEventListener('DOMContentLoaded', function () {
     let currentChapter = 1;
     const totalChapters = 6;
-    let isArabic = true; // Default language is Arabic
-    
-    // Show loader
+    let isArabic = true;
+
+    const chapterMessages = {
+        1: "Where it all began...",
+        2: "The spark that lit our hearts 🔥",
+        3: "Our first real moment together",
+        4: "Through ups and downs — still one soul",
+        5: "Even from afar, love only grew",
+        6: "The chapter before forever ❤️"
+    };
+
     const loader = document.querySelector('.loader');
-    
-    // Hide loader after page loads
-    window.addEventListener('load', function() {
-        setTimeout(function() {
+
+    window.addEventListener('load', function () {
+        setTimeout(function () {
             loader.style.opacity = '0';
-            setTimeout(function() {
+            setTimeout(function () {
                 loader.style.display = 'none';
-                
-                // Show initial animations
+
                 document.querySelector('.site-title').classList.add('animate');
                 document.querySelector('.site-subtitle').classList.add('animate');
                 document.querySelector('.chapter-nav').classList.add('animate');
-                
-                // Show first chapter
+
                 showChapter(1);
-                
-                // Initialize floating hearts
                 initFloatingHearts();
             }, 500);
         }, 1500);
     });
-    
-    // Chapter navigation
+
     const chapterBtns = document.querySelectorAll('.chapter-btn');
     chapterBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const chapterNum = parseInt(this.getAttribute('data-chapter'));
             showChapter(chapterNum);
         });
     });
-    
-    // Next and Previous buttons
-    document.addEventListener('click', function(e) {
+
+    document.addEventListener('click', function (e) {
         if (e.target.classList.contains('next-btn')) {
             if (currentChapter < totalChapters) {
                 showChapter(currentChapter + 1);
-            } else if (currentChapter === totalChapters) {
+            } else {
                 showBirthdayPage();
             }
         } else if (e.target.classList.contains('prev-btn')) {
@@ -58,118 +57,102 @@ document.addEventListener('DOMContentLoaded', function() {
             showChapter(totalChapters);
         }
     });
-    
-    // Show specific chapter
+
     function showChapter(chapterNum) {
-        // Create page transition effect
         const transition = document.createElement('div');
         transition.className = 'page-transition';
+
+        const transitionMessage = document.createElement('div');
+        transitionMessage.className = 'transition-message';
+        transitionMessage.textContent = chapterMessages[chapterNum] || 'Loading next chapter...';
+
+        transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
-        
-        setTimeout(function() {
+
+        setTimeout(function () {
             transition.classList.add('active');
-            
-            setTimeout(function() {
-                // Hide all chapters
+
+            setTimeout(function () {
                 const chapters = document.querySelectorAll('.chapter-container');
                 chapters.forEach(chapter => {
                     chapter.style.display = 'none';
                     chapter.classList.remove('active');
                 });
-                
-                // Update active chapter button
+
                 chapterBtns.forEach(btn => {
                     btn.classList.remove('active');
                     if (parseInt(btn.getAttribute('data-chapter')) === chapterNum) {
                         btn.classList.add('active');
                     }
                 });
-                
-                // Show selected chapter
+
                 const selectedChapter = document.getElementById(`chapter${chapterNum}`);
                 selectedChapter.style.display = 'block';
-                
-                // Hide birthday page if showing a chapter
+
                 const birthdayPage = document.getElementById('birthdayPage');
                 birthdayPage.style.display = 'none';
-                
-                // Update current chapter
+
                 currentChapter = chapterNum;
-                
-                // Update background image based on chapter
                 updateBackground(chapterNum);
-                
-                // Scroll to top
                 window.scrollTo(0, 0);
-                
-                setTimeout(function() {
+
+                setTimeout(function () {
                     selectedChapter.classList.add('active');
-                    
-                    // Exit transition
                     transition.classList.add('exit');
-                    
-                    setTimeout(function() {
+
+                    setTimeout(function () {
                         document.body.removeChild(transition);
                     }, 800);
                 }, 100);
             }, 800);
         }, 50);
     }
-    
-    // Show birthday page
+
     function showBirthdayPage() {
-        // Create page transition effect
         const transition = document.createElement('div');
         transition.className = 'page-transition';
+
+        const transitionMessage = document.createElement('div');
+        transitionMessage.className = 'transition-message';
+        transitionMessage.textContent = "A surprise just for you 🎉❤️";
+
+        transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
-        
-        setTimeout(function() {
+
+        setTimeout(function () {
             transition.classList.add('active');
-            
-            setTimeout(function() {
-                // Hide all chapters
+
+            setTimeout(function () {
                 const chapters = document.querySelectorAll('.chapter-container');
                 chapters.forEach(chapter => {
                     chapter.style.display = 'none';
                     chapter.classList.remove('active');
                 });
-                
-                // Show birthday page
+
                 const birthdayPage = document.getElementById('birthdayPage');
                 birthdayPage.style.display = 'block';
-                
-                // Update background
+
                 document.querySelector('.bg-image').style.filter = 'brightness(0.6) blur(5px)';
-                
-                // Create heart shower
                 createHeartShower();
-                
-                // Scroll to top
                 window.scrollTo(0, 0);
-                
-                setTimeout(function() {
+
+                setTimeout(function () {
                     birthdayPage.classList.add('active');
-                    
-                    // Exit transition
                     transition.classList.add('exit');
-                    
-                    setTimeout(function() {
+
+                    setTimeout(function () {
                         document.body.removeChild(transition);
                     }, 800);
                 }, 100);
             }, 800);
         }, 50);
     }
-    
-    // Update background based on chapter
+
     function updateBackground(chapterNum) {
         const bgImage = document.querySelector('.bg-image');
-        
-        // Reset filters
         bgImage.style.filter = 'brightness(0.8)';
-        
-        // Apply chapter-specific effects
-        switch(chapterNum) {
+
+        switch (chapterNum) {
             case 1:
                 bgImage.style.filter = 'brightness(0.8) sepia(0.2)';
                 break;
@@ -190,98 +173,77 @@ document.addEventListener('DOMContentLoaded', function() {
                 break;
         }
     }
-    
-    // Language toggle
+
     const langToggle = document.querySelector('.language-toggle');
     if (langToggle) {
-        langToggle.addEventListener('click', function() {
+        langToggle.addEventListener('click', function () {
             isArabic = !isArabic;
-            
+
             if (isArabic) {
                 document.body.style.direction = 'rtl';
                 langToggle.textContent = 'English';
-                // Update all text elements to Arabic
                 updateLanguage('ar');
             } else {
                 document.body.style.direction = 'ltr';
                 langToggle.textContent = 'العربية';
-                // Update all text elements to English
                 updateLanguage('en');
             }
         });
     }
-    
-    // Update language function (placeholder - would need actual translations)
+
     function updateLanguage(lang) {
-        // This would be implemented with actual translations
         console.log(`Language changed to ${lang}`);
     }
-    
-    // Initialize floating hearts
+
     function initFloatingHearts() {
         const heartsContainer = document.querySelector('.floating-hearts');
-        
-        // Create initial hearts
+
         for (let i = 0; i < 10; i++) {
             createHeart(heartsContainer);
         }
-        
-        // Continue creating hearts
-        setInterval(function() {
+
+        setInterval(function () {
             createHeart(heartsContainer);
         }, 3000);
     }
-    
-    // Create a single floating heart
+
     function createHeart(container) {
         const heart = document.createElement('div');
         heart.className = 'heart-particle';
-        
-        // Random position
-        const startPos = Math.random() * 100;
-        heart.style.left = `${startPos}%`;
+
+        heart.style.left = `${Math.random() * 100}%`;
         heart.style.bottom = '-20px';
-        
-        // Random size
+
         const size = Math.random() * 15 + 10;
         heart.style.width = `${size}px`;
         heart.style.height = `${size}px`;
-        
-        // Random opacity and color variation
+
         heart.style.opacity = Math.random() * 0.5 + 0.5;
-        const hue = Math.random() * 20 - 10; // Slight color variation
+        const hue = Math.random() * 20 - 10;
         heart.style.backgroundColor = `hsl(0, 100%, ${60 + hue}%)`;
-        
-        // Random animation duration
+
         const duration = Math.random() * 10 + 10;
         heart.style.animation = `floatUp ${duration}s ease-in infinite`;
-        
-        // Add to container
+
         container.appendChild(heart);
-        
-        // Remove after animation
-        setTimeout(function() {
+
+        setTimeout(function () {
             container.removeChild(heart);
         }, duration * 1000);
     }
-    
-    // Create heart shower for birthday page
+
     function createHeartShower() {
         const heartsContainer = document.querySelector('.floating-hearts');
-        
-        // Create many hearts at once
         for (let i = 0; i < 50; i++) {
-            setTimeout(function() {
+            setTimeout(function () {
                 createHeart(heartsContainer);
             }, i * 200);
         }
     }
-    
-    // Handle video playback
+
     const videos = document.querySelectorAll('video');
     videos.forEach(video => {
-        video.addEventListener('play', function() {
-            // Pause other videos when one starts playing
+        video.addEventListener('play', function () {
             videos.forEach(v => {
                 if (v !== video && !v.paused) {
                     v.pause();
@@ -289,20 +251,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    
-    // Scroll indicator
+
     const scrollIndicator = document.querySelector('.scroll-indicator');
     if (scrollIndicator) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                scrollIndicator.style.opacity = '0';
-            } else {
-                scrollIndicator.style.opacity = '1';
-            }
+        window.addEventListener('scroll', function () {
+            scrollIndicator.style.opacity = window.scrollY > 300 ? '0' : '1';
         });
     }
-    
-    // Make global functions available
+
     window.showChapter = showChapter;
     window.showBirthdayPage = showBirthdayPage;
 });
