@@ -60,39 +60,48 @@ document.addEventListener('DOMContentLoaded', function () {
         const transition = document.createElement('div');
         transition.className = 'page-transition';
 
-        // Heart sparkle container
+        // Sparkle container
         const sparkleContainer = document.createElement('div');
         sparkleContainer.className = 'sparkle-container';
         transition.appendChild(sparkleContainer);
 
         for (let i = 0; i < 25; i++) {
-            const heart = document.createElement('div');
-            heart.className = 'sparkle-heart';
-            heart.style.left = `${Math.random() * 100}%`;
-            heart.style.top = `${Math.random() * 100}%`;
-            heart.style.animationDelay = `${Math.random() * 2}s`;
-            sparkleContainer.appendChild(heart);
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparkleContainer.appendChild(sparkle);
         }
 
+        // Animated message
         const transitionMessage = document.createElement('div');
-        transitionMessage.className = 'transition-message magic fade-in';
-        transitionMessage.textContent = chapterMessages[chapterNum] || 'Loading next chapter...';
-        transition.appendChild(transitionMessage);
+        transitionMessage.className = 'transition-message magic';
+        const messageText = chapterMessages[chapterNum] || 'Loading next chapter...';
 
+        [...messageText].forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.animationDelay = `${index * 0.05}s`;
+            transitionMessage.appendChild(span);
+        });
+
+        transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
 
-        // Heartbeat audio
-        const heartbeat = new Audio('sounds/heartbeat.mp3');
-        heartbeat.volume = 0.5;
-        heartbeat.play();
+        // Optional sound effect
+        const chime = new Audio('sounds/chime.mp3');
+        chime.volume = 0.5;
+        chime.play();
 
-        setTimeout(() => {
+        setTimeout(function () {
             transition.classList.add('active');
 
-            setTimeout(() => {
-                document.querySelectorAll('.chapter-container').forEach(c => {
-                    c.style.display = 'none';
-                    c.classList.remove('active');
+            setTimeout(function () {
+                const chapters = document.querySelectorAll('.chapter-container');
+                chapters.forEach(chapter => {
+                    chapter.style.display = 'none';
+                    chapter.classList.remove('active');
                 });
 
                 chapterBtns.forEach(btn => {
@@ -105,21 +114,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 const selectedChapter = document.getElementById(`chapter${chapterNum}`);
                 selectedChapter.style.display = 'block';
 
-                document.getElementById('birthdayPage').style.display = 'none';
+                const birthdayPage = document.getElementById('birthdayPage');
+                birthdayPage.style.display = 'none';
 
                 currentChapter = chapterNum;
                 updateBackground(chapterNum);
                 window.scrollTo(0, 0);
 
-                setTimeout(() => {
+                setTimeout(function () {
                     selectedChapter.classList.add('active');
                     transition.classList.add('exit');
-                    heartbeat.pause();
 
-                    setTimeout(() => {
+                    setTimeout(function () {
                         document.body.removeChild(transition);
                     }, 1000);
-                }, 2500);
+                }, 2500); // Show message longer
             }, 2000);
         }, 50);
     }
@@ -133,46 +142,53 @@ document.addEventListener('DOMContentLoaded', function () {
         transition.appendChild(sparkleContainer);
 
         for (let i = 0; i < 25; i++) {
-            const heart = document.createElement('div');
-            heart.className = 'sparkle-heart';
-            heart.style.left = `${Math.random() * 100}%`;
-            heart.style.top = `${Math.random() * 100}%`;
-            heart.style.animationDelay = `${Math.random() * 2}s`;
-            sparkleContainer.appendChild(heart);
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparkleContainer.appendChild(sparkle);
         }
 
         const transitionMessage = document.createElement('div');
-        transitionMessage.className = 'transition-message magic fade-in';
-        transitionMessage.textContent = "مفاجأة صغيرة لكِ 🎁❤️";
-        transition.appendChild(transitionMessage);
+        transitionMessage.className = 'transition-message magic';
+        const messageText = "مفاجأة صغيرة لكِ 🎁❤️";
+        [...messageText].forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.animationDelay = `${index * 0.05}s`;
+            transitionMessage.appendChild(span);
+        });
 
+        transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
 
-        const heartbeat = new Audio('sounds/heartbeat.mp3');
-        heartbeat.volume = 0.5;
-        heartbeat.play();
+        const chime = new Audio('sounds/chime.mp3');
+        chime.volume = 0.5;
+        chime.play();
 
-        setTimeout(() => {
+        setTimeout(function () {
             transition.classList.add('active');
 
-            setTimeout(() => {
-                document.querySelectorAll('.chapter-container').forEach(c => {
-                    c.style.display = 'none';
-                    c.classList.remove('active');
+            setTimeout(function () {
+                const chapters = document.querySelectorAll('.chapter-container');
+                chapters.forEach(chapter => {
+                    chapter.style.display = 'none';
+                    chapter.classList.remove('active');
                 });
 
                 const birthdayPage = document.getElementById('birthdayPage');
                 birthdayPage.style.display = 'block';
+
                 document.querySelector('.bg-image').style.filter = 'brightness(0.6) blur(5px)';
                 createHeartShower();
                 window.scrollTo(0, 0);
 
-                setTimeout(() => {
+                setTimeout(function () {
                     birthdayPage.classList.add('active');
                     transition.classList.add('exit');
-                    heartbeat.pause();
 
-                    setTimeout(() => {
+                    setTimeout(function () {
                         document.body.removeChild(transition);
                     }, 1000);
                 }, 2500);
@@ -214,28 +230,21 @@ document.addEventListener('DOMContentLoaded', function () {
         setInterval(() => createHeart(heartsContainer), 3000);
     }
 
-   function createHeart(container) {
-    const sparkle = document.createElement('div');
-    sparkle.className = 'sparkle';
-
-    sparkle.style.left = `${Math.random() * 100}%`;
-    sparkle.style.bottom = '-20px';
-
-    const size = Math.random() * 15 + 10;
-    sparkle.style.width = `${size}px`;
-    sparkle.style.height = `${size}px`;
-
-    sparkle.style.opacity = Math.random() * 0.5 + 0.5;
-    const hue = Math.random() * 20 - 10;
-    sparkle.style.backgroundColor = `hsl(0, 100%, ${60 + hue}%)`;
-
-    const duration = Math.random() * 10 + 10;
-    sparkle.style.animation = `floatUp ${duration}s ease-in infinite`;
-
-    container.appendChild(sparkle);
-
-    setTimeout(() => container.removeChild(sparkle), duration * 1000);
-
+    function createHeart(container) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-particle';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.bottom = '-20px';
+        const size = Math.random() * 15 + 10;
+        heart.style.width = `${size}px`;
+        heart.style.height = `${size}px`;
+        heart.style.opacity = Math.random() * 0.5 + 0.5;
+        const hue = Math.random() * 20 - 10;
+        heart.style.backgroundColor = `hsl(0, 100%, ${60 + hue}%)`;
+        const duration = Math.random() * 10 + 10;
+        heart.style.animation = `floatUp ${duration}s ease-in infinite`;
+        container.appendChild(heart);
+        setTimeout(() => container.removeChild(heart), duration * 1000);
     }
 
     function createHeartShower() {
