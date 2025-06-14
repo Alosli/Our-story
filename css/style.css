@@ -875,7 +875,8 @@ header {
   }
 }
 
-/* Heart Sparkles */
+
+/* Heart Sparkles 
 .sparkle-container {
   position: absolute;
   width: 100%;
@@ -914,7 +915,7 @@ header {
   top: 0;
   left: -10px;
 }
-
+*/
 @keyframes sparkle-float {
   0% { transform: rotate(45deg) translateY(0) scale(1); opacity: 0.8; }
   50% { transform: rotate(45deg) translateY(-20px) scale(1.2); opacity: 1; }
