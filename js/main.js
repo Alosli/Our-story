@@ -215,8 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function createHeart(container) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-particle';
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
         heart.style.left = `${Math.random() * 100}%`;
         heart.style.bottom = '-20px';
         const size = Math.random() * 15 + 10;
