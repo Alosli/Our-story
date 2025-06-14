@@ -262,3 +262,4 @@ document.addEventListener('DOMContentLoaded', function () {
     window.showChapter = showChapter;
     window.showBirthdayPage = showBirthdayPage;
 });
+
