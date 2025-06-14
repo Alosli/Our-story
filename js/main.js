@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const chapterMessages = {
         1: "❤️ أحــــــــــــــبك ❤️",
         2: "❤️ أعشقـــــــــــــــــك ❤️",
-        3: "❤️ أمــــــــــــــــــــوت فيكي",
+        3: "❤️ أمــــــــــــــــــــوت فيكي ❤️",
         4: "❤️ أهـــــــــــــــواكي ❤️",
         5: "❤️ مَتـــــــــــــــــيم فيكي ❤️",
         6: "❤️ أنتي حقي وانا حقك ❤️"
@@ -102,9 +102,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     setTimeout(function () {
                         document.body.removeChild(transition);
-                    }, 800);
+                    }, 1500);
                 }, 100);
-            }, 800);
+            }, 1500);
         }, 50);
     }
 
