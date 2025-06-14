@@ -1,5 +1,3 @@
-// Main JavaScript for Love Story Website
-
 document.addEventListener('DOMContentLoaded', function () {
     let currentChapter = 1;
     const totalChapters = 6;
@@ -62,12 +60,39 @@ document.addEventListener('DOMContentLoaded', function () {
         const transition = document.createElement('div');
         transition.className = 'page-transition';
 
+        // Sparkle container
+        const sparkleContainer = document.createElement('div');
+        sparkleContainer.className = 'sparkle-container';
+        transition.appendChild(sparkleContainer);
+
+        for (let i = 0; i < 25; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparkleContainer.appendChild(sparkle);
+        }
+
+        // Animated message
         const transitionMessage = document.createElement('div');
-        transitionMessage.className = 'transition-message';
-        transitionMessage.textContent = chapterMessages[chapterNum] || 'Loading next chapter...';
+        transitionMessage.className = 'transition-message magic';
+        const messageText = chapterMessages[chapterNum] || 'Loading next chapter...';
+
+        [...messageText].forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.animationDelay = `${index * 0.05}s`;
+            transitionMessage.appendChild(span);
+        });
 
         transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
+
+        // Optional sound effect
+        const chime = new Audio('sounds/chime.mp3');
+        chime.volume = 0.5;
+        chime.play();
 
         setTimeout(function () {
             transition.classList.add('active');
@@ -102,9 +127,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     setTimeout(function () {
                         document.body.removeChild(transition);
-                    }, 1500);
-                }, 100);
-            }, 1500);
+                    }, 1000);
+                }, 2500); // Show message longer
+            }, 2000);
         }, 50);
     }
 
@@ -112,12 +137,35 @@ document.addEventListener('DOMContentLoaded', function () {
         const transition = document.createElement('div');
         transition.className = 'page-transition';
 
+        const sparkleContainer = document.createElement('div');
+        sparkleContainer.className = 'sparkle-container';
+        transition.appendChild(sparkleContainer);
+
+        for (let i = 0; i < 25; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.top = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 2}s`;
+            sparkleContainer.appendChild(sparkle);
+        }
+
         const transitionMessage = document.createElement('div');
-        transitionMessage.className = 'transition-message';
-        transitionMessage.textContent = "A surprise just for you 🎉❤️";
+        transitionMessage.className = 'transition-message magic';
+        const messageText = "مفاجأة صغيرة لكِ 🎁❤️";
+        [...messageText].forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.animationDelay = `${index * 0.05}s`;
+            transitionMessage.appendChild(span);
+        });
 
         transition.appendChild(transitionMessage);
         document.body.appendChild(transition);
+
+        const chime = new Audio('sounds/chime.mp3');
+        chime.volume = 0.5;
+        chime.play();
 
         setTimeout(function () {
             transition.classList.add('active');
@@ -142,9 +190,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     setTimeout(function () {
                         document.body.removeChild(transition);
-                    }, 800);
-                }, 100);
-            }, 800);
+                    }, 1000);
+                }, 2500);
+            }, 2000);
         }, 50);
     }
 
@@ -153,24 +201,12 @@ document.addEventListener('DOMContentLoaded', function () {
         bgImage.style.filter = 'brightness(0.8)';
 
         switch (chapterNum) {
-            case 1:
-                bgImage.style.filter = 'brightness(0.8) sepia(0.2)';
-                break;
-            case 2:
-                bgImage.style.filter = 'brightness(0.8) hue-rotate(10deg)';
-                break;
-            case 3:
-                bgImage.style.filter = 'brightness(0.8) saturate(1.2)';
-                break;
-            case 4:
-                bgImage.style.filter = 'brightness(0.8) contrast(1.1)';
-                break;
-            case 5:
-                bgImage.style.filter = 'brightness(0.8) sepia(0.1) hue-rotate(-10deg)';
-                break;
-            case 6:
-                bgImage.style.filter = 'brightness(0.7) saturate(1.3)';
-                break;
+            case 1: bgImage.style.filter = 'brightness(0.8) sepia(0.2)'; break;
+            case 2: bgImage.style.filter = 'brightness(0.8) hue-rotate(10deg)'; break;
+            case 3: bgImage.style.filter = 'brightness(0.8) saturate(1.2)'; break;
+            case 4: bgImage.style.filter = 'brightness(0.8) contrast(1.1)'; break;
+            case 5: bgImage.style.filter = 'brightness(0.8) sepia(0.1) hue-rotate(-10deg)'; break;
+            case 6: bgImage.style.filter = 'brightness(0.7) saturate(1.3)'; break;
         }
     }
 
@@ -178,16 +214,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (langToggle) {
         langToggle.addEventListener('click', function () {
             isArabic = !isArabic;
-
-            if (isArabic) {
-                document.body.style.direction = 'rtl';
-                langToggle.textContent = 'English';
-                updateLanguage('ar');
-            } else {
-                document.body.style.direction = 'ltr';
-                langToggle.textContent = 'العربية';
-                updateLanguage('en');
-            }
+            document.body.style.direction = isArabic ? 'rtl' : 'ltr';
+            langToggle.textContent = isArabic ? 'English' : 'العربية';
+            updateLanguage(isArabic ? 'ar' : 'en');
         });
     }
 
@@ -197,64 +226,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function initFloatingHearts() {
         const heartsContainer = document.querySelector('.floating-hearts');
-
-        for (let i = 0; i < 10; i++) {
-            createHeart(heartsContainer);
-        }
-
-        setInterval(function () {
-            createHeart(heartsContainer);
-        }, 3000);
+        for (let i = 0; i < 10; i++) createHeart(heartsContainer);
+        setInterval(() => createHeart(heartsContainer), 3000);
     }
 
     function createHeart(container) {
         const heart = document.createElement('div');
         heart.className = 'heart-particle';
-
         heart.style.left = `${Math.random() * 100}%`;
         heart.style.bottom = '-20px';
-
         const size = Math.random() * 15 + 10;
         heart.style.width = `${size}px`;
         heart.style.height = `${size}px`;
-
         heart.style.opacity = Math.random() * 0.5 + 0.5;
         const hue = Math.random() * 20 - 10;
         heart.style.backgroundColor = `hsl(0, 100%, ${60 + hue}%)`;
-
         const duration = Math.random() * 10 + 10;
         heart.style.animation = `floatUp ${duration}s ease-in infinite`;
-
         container.appendChild(heart);
-
-        setTimeout(function () {
-            container.removeChild(heart);
-        }, duration * 1000);
+        setTimeout(() => container.removeChild(heart), duration * 1000);
     }
 
     function createHeartShower() {
         const heartsContainer = document.querySelector('.floating-hearts');
         for (let i = 0; i < 50; i++) {
-            setTimeout(function () {
-                createHeart(heartsContainer);
-            }, i * 200);
+            setTimeout(() => createHeart(heartsContainer), i * 200);
         }
     }
 
     const videos = document.querySelectorAll('video');
     videos.forEach(video => {
-        video.addEventListener('play', function () {
+        video.addEventListener('play', () => {
             videos.forEach(v => {
-                if (v !== video && !v.paused) {
-                    v.pause();
-                }
+                if (v !== video && !v.paused) v.pause();
             });
         });
     });
 
     const scrollIndicator = document.querySelector('.scroll-indicator');
     if (scrollIndicator) {
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', () => {
             scrollIndicator.style.opacity = window.scrollY > 300 ? '0' : '1';
         });
     }
@@ -262,4 +273,3 @@ document.addEventListener('DOMContentLoaded', function () {
     window.showChapter = showChapter;
     window.showBirthdayPage = showBirthdayPage;
 });
-
