@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.body.removeChild(transition);
                     }, 2500);
                 }, 100);
-            }, 2500);
+            }, 800);
         }, 50);
     }
 
