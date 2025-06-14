@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     setTimeout(function () {
                         document.body.removeChild(transition);
-                    }, 800);
+                    }, 2500);
                 }, 100);
-            }, 800);
+            }, 2500);
         }, 50);
     }
 
